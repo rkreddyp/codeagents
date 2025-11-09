@@ -15,7 +15,6 @@ import asyncio
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import io
-import PyPDF2
 import re
 app = modal.App(name="mcp-threatintel-auth")
 
@@ -25,10 +24,6 @@ image = modal.Image.debian_slim().run_commands(
     "pip install httpx requests uvicorn fastapi pandas geocoder atlassian-python-api boto3 Pillow websockets google-genai openai anthropic",
     "pip install fastmcp --upgrade",
     "pip install PyPDF2",
-).add_local_dir(
-    "/Users/venkatp/workfolder/ai_apps/securitygpt",
-    remote_path="/tmp/securitygpt",
-    ignore=lambda p: any(part.startswith('.') for part in p.parts) or p.name.endswith('.pyc'),
 )
 
 # Modal secrets
