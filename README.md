@@ -1,6 +1,6 @@
-# Application with CustomSkills
+# Application with Skills
 
-A full-stack application with frontend and backend, both utilizing a customskills architecture for extensible functionality.
+A full-stack application with frontend and backend, both utilizing a skills architecture for extensible functionality.
 
 ## Project Structure
 
@@ -9,25 +9,26 @@ A full-stack application with frontend and backend, both utilizing a customskill
 ├── frontend/              # React frontend application
 │   ├── src/              # Source code
 │   ├── public/           # Static assets
-│   ├── customskills/     # Frontend custom skills
 │   └── package.json
 ├── backend/              # Node.js/Express backend API
 │   ├── src/              # Source code
-│   ├── customskills/     # Backend custom skills
 │   └── package.json
-└── shared/               # Shared code and utilities
-    └── customskills/     # Shared custom skills
+├── shared/               # Shared code and utilities
+└── skills/               # Skills architecture (top level)
+    ├── Front-End/        # Frontend skills
+    ├── Back-End/         # Backend skills
+    └── Shared/           # Shared skills
 ```
 
-## CustomSkills Architecture
+## Skills Architecture
 
-This application uses a customskills architecture that allows both frontend and backend to:
+This application uses a skills architecture that allows both frontend and backend to:
 - Register modular, reusable functionality as "skills"
 - Execute skills independently or via API calls
 - Extend functionality without modifying core code
 - Share common skills between frontend and backend
 
-### How CustomSkills Work
+### How Skills Work
 
 1. **Skill Registration**: Skills are registered in the skill registry with an ID, name, description, and execute function
 2. **Skill Execution**: Skills can be executed locally or via API endpoints
@@ -92,27 +93,27 @@ npm start
 ```
 The frontend will run on http://localhost:3000
 
-## CustomSkills Examples
+## Skills Examples
 
 ### Frontend Skills
 
-Located in `frontend/customskills/skillRegistry.js`:
+Located in `skills/Front-End/skillRegistry.js`:
 - **data-formatter**: Formats data for display
 - **validator**: Validates input data
 
 ### Backend Skills
 
-Located in `backend/customskills/skillRegistry.js`:
+Located in `skills/Back-End/skillRegistry.js`:
 - **data-processor**: Processes and transforms data
 - **analytics**: Performs analytics on data
 - **email-notifier**: Sends email notifications
 
-## Creating New CustomSkills
+## Creating New Skills
 
 ### Frontend Skill
 
 ```javascript
-// In frontend/customskills/skillRegistry.js
+// In skills/Front-End/skillRegistry.js
 skillRegistry.register({
   id: 'my-custom-skill',
   name: 'My Custom Skill',
@@ -127,7 +128,7 @@ skillRegistry.register({
 ### Backend Skill
 
 ```javascript
-// In backend/customskills/skillRegistry.js
+// In skills/Back-End/skillRegistry.js
 this.register({
   id: 'my-backend-skill',
   name: 'My Backend Skill',
@@ -141,14 +142,14 @@ this.register({
 
 ## API Endpoints
 
-### CustomSkills API
+### Skills API
 
-- `GET /api/customskills` - Get all available skills
-- `POST /api/customskills/:skillId/execute` - Execute a specific skill
+- `GET /api/skills` - Get all available skills
+- `POST /api/skills/:skillId/execute` - Execute a specific skill
 
 Example:
 ```bash
-curl -X POST http://localhost:3001/api/customskills/data-processor/execute \
+curl -X POST http://localhost:3001/api/skills/data-processor/execute \
   -H "Content-Type: application/json" \
   -d '{"data": {"key": "value"}}'
 ```
@@ -182,7 +183,7 @@ npm test
 ## Contributing
 
 1. Create a new branch for your feature
-2. Add your customskills to the appropriate registry
+2. Add your skills to the appropriate registry
 3. Test your changes
 4. Submit a pull request
 

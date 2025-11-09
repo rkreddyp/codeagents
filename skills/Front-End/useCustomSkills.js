@@ -34,7 +34,7 @@ export const useCustomSkills = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/customskills/${skillId}/execute`,
+        `${process.env.REACT_APP_API_URL}/api/skills/${skillId}/execute`,
         { data }
       );
       return response.data;

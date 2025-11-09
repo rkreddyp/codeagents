@@ -1,10 +1,10 @@
-# Shared CustomSkills
+# Shared Skills
 
-This directory contains shared customskills that can be used by both frontend and backend.
+This directory contains shared skills that can be used by both frontend and backend.
 
 ## Purpose
 
-The shared customskills folder allows you to:
+The shared skills folder allows you to:
 - Define common skill interfaces
 - Share utility functions between frontend and backend
 - Maintain consistent skill definitions across the application
@@ -20,7 +20,7 @@ The shared customskills folder allows you to:
 ### Example
 
 ```javascript
-// shared/customskills/dateFormatter.js
+// skills/Shared/dateFormatter.js
 module.exports = {
   id: 'date-formatter',
   name: 'Date Formatter',

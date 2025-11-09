@@ -1,6 +1,6 @@
 # Backend Application
 
-Node.js/Express backend API with CustomSkills support.
+Node.js/Express backend API with Skills support.
 
 ## Structure
 
@@ -9,23 +9,25 @@ backend/
 ├── src/
 │   ├── index.js                  # Application entry point
 │   └── routes/
-│       └── customskills.js       # CustomSkills API routes
-├── customskills/
-│   ├── customSkillsService.js    # Service layer for skills
-│   └── skillRegistry.js          # Skill registration and management
+│       └── customskills.js       # Skills API routes
 └── package.json
+
+skills/
+└── Back-End/
+    ├── customSkillsService.js    # Service layer for skills
+    └── skillRegistry.js          # Skill registration and management
 ```
 
-## CustomSkills in Backend
+## Skills in Backend
 
-The backend provides a service-based architecture for managing customskills:
+The backend provides a service-based architecture for managing skills:
 
 ### SkillRegistry
 
 Manages all registered skills:
 
 ```javascript
-const skillRegistry = require('./customskills/skillRegistry');
+const skillRegistry = require('../skills/Back-End/skillRegistry');
 
 // Get all skills
 const skills = skillRegistry.getAll();
@@ -49,7 +51,7 @@ skillRegistry.register({
 Handles skill execution with error handling:
 
 ```javascript
-const customSkillsService = require('./customskills/customSkillsService');
+const customSkillsService = require('../skills/Back-End/customSkillsService');
 
 // Execute a skill
 const result = await customSkillsService.executeSkill('data-processor', {
@@ -59,7 +61,7 @@ const result = await customSkillsService.executeSkill('data-processor', {
 
 ## API Endpoints
 
-### GET /api/customskills
+### GET /api/skills
 
 Get all available skills.
 
@@ -74,7 +76,7 @@ Get all available skills.
 ]
 ```
 
-### POST /api/customskills/:skillId/execute
+### POST /api/skills/:skillId/execute
 
 Execute a specific skill.
 
@@ -113,7 +115,7 @@ Sends email notifications (stub implementation).
 
 ## Adding New Skills
 
-Add skills to `customskills/skillRegistry.js`:
+Add skills to `skills/Back-End/skillRegistry.js`:
 
 ```javascript
 this.register({
@@ -161,17 +163,17 @@ CORS_ORIGIN=http://localhost:3000
 Using curl:
 ```bash
 # Get all skills
-curl http://localhost:3001/api/customskills
+curl http://localhost:3001/api/skills
 
 # Execute a skill
-curl -X POST http://localhost:3001/api/customskills/data-processor/execute \
+curl -X POST http://localhost:3001/api/skills/data-processor/execute \
   -H "Content-Type: application/json" \
   -d '{"data": {"test": "value"}}'
 ```
 
 Using JavaScript:
 ```javascript
-const response = await fetch('http://localhost:3001/api/customskills/data-processor/execute', {
+const response = await fetch('http://localhost:3001/api/skills/data-processor/execute', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ data: { test: 'value' } })

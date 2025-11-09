@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCustomSkills } from './customskills/useCustomSkills';
+import { useCustomSkills } from '../../skills/Front-End/useCustomSkills';
 
 function App() {
   const { skills, executeSkill } = useCustomSkills();
