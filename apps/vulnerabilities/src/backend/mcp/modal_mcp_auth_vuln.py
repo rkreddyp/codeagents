@@ -25,17 +25,13 @@ image = modal.Image.debian_slim().run_commands(
     "pip install httpx requests uvicorn fastapi pandas geocoder atlassian-python-api boto3 Pillow websockets google-genai openai anthropic",
     "pip install fastmcp --upgrade",
     "pip install PyPDF2",
-).add_local_dir(
-    "/Users/venkatp/workfolder/ai_apps/securitygpt",
-    remote_path="/tmp/securitygpt",
-    ignore=lambda p: any(part.startswith('.') for part in p.parts) or p.name.endswith('.pyc'),
 )
 
 # Modal secrets
-tr_aws_secrets = [modal.Secret.from_name("tr_aws_secret", environment_name="main")]
-llm_secrets = [modal.Secret.from_name("llm-secrets", environment_name="main")]
-aws_secrets = [modal.Secret.from_name("my-aws-secret", environment_name="main")]
-app_secrets = [modal.Secret.from_name("app_keys", environment_name="main")]
+tr_aws_secrets = [modal.Secret.from_name("tr_aws_secret", environment_name="vuln-ti-prod")]
+llm_secrets = [modal.Secret.from_name("llm-secrets", environment_name="vuln-ti-prod")]
+aws_secrets = [modal.Secret.from_name("my-aws-secret", environment_name="vuln-ti-prod")]
+app_secrets = [modal.Secret.from_name("app_keys", environment_name="vuln-ti-prod")]
 
 all_secrets = tr_aws_secrets + llm_secrets + aws_secrets + app_secrets
 
