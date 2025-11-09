@@ -1,5 +1,7 @@
 import os
 import contextlib
+import secrets
+import json
 import modal
 from modal import Image, App, asgi_app
 from fastapi import FastAPI, Request, status
@@ -9,7 +11,6 @@ import requests
 import time
 import io
 import zipfile
-import json
 from fastapi.responses import StreamingResponse
 import asyncio
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -198,8 +199,9 @@ app = modal.App(
 @asgi_app(label="mcp-threatintel-auth", custom_domains=["threatintelmcp.transilienceapi.com"])
 def threatintelmcp_transilienceapi_com() -> FastAPI:
     """Entrypoint for Modal to serve the FastAPI + MCP ASGI app."""
-    # Get expected token from environment
-    EXPECTED_TOKEN = "changeme"
+    # Load valid API keys from environment
+    VALID_KEYS = json.loads(os.environ.get("MCP_VALID_KEYS", '["changeme"]'))
+
     # Create MCP app first
     mcp_app = threatintel_mcp.http_app(
         path="/mcp",
@@ -230,7 +232,8 @@ def threatintelmcp_transilienceapi_com() -> FastAPI:
             scheme, token = auth_header.split()
             if scheme.lower() != "bearer":
                 raise ValueError("Invalid authentication scheme")
-            if token != EXPECTED_TOKEN:
+            # Use timing-attack resistant comparison
+            if not any(secrets.compare_digest(token, valid_key) for valid_key in VALID_KEYS):
                 raise ValueError("Invalid token")
         except (ValueError, AttributeError):
             return JSONResponse(
