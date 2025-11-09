@@ -14,10 +14,10 @@ app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
-  res.json({ message: 'Backend API with CustomSkills' });
+  res.json({ message: 'Backend API with Skills' });
 });
 
-app.use('/api/customskills', customSkillsRouter);
+app.use('/api/skills', customSkillsRouter);
 
 // Start server
 app.listen(PORT, () => {

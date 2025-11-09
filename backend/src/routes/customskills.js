@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const customSkillsService = require('../customskills/customSkillsService');
+const customSkillsService = require('../../../skills/Back-End/customSkillsService');
 
 // Get all available skills
 router.get('/', (req, res) => {
