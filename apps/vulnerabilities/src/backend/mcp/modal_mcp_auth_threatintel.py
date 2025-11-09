@@ -196,7 +196,7 @@ app = modal.App(
 
 @app.function(image=image, min_containers=1)
 @asgi_app(label="mcp-threatintel-auth", custom_domains=["threatintelmcp.transilienceapi.com"])
-def threatintelmcp() -> FastAPI:
+def threatintelmcp_transilienceapi_com() -> FastAPI:
     """Entrypoint for Modal to serve the FastAPI + MCP ASGI app."""
     # Get expected token from environment
     EXPECTED_TOKEN = "changeme"
