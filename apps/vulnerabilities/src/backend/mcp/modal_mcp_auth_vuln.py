@@ -366,8 +366,8 @@ def prioritize_vulnerabilities(cves: list[str] = None) -> dict:
 
 
 @app.function(image=image, min_containers=1)
-@asgi_app(label="mcp-vuln-auth", custom_domains=["mcp-vuln-auth.transilienceapi.com"])
-def serve() -> FastAPI:
+@asgi_app(label="mcp-vuln-auth", custom_domains=["vulnmcp.transilienceapi.com"])
+def vulnmcp_transilienceai() -> FastAPI:
     """Entrypoint for Modal to serve the FastAPI + MCP ASGI app."""
     # Get expected token from environment
     EXPECTED_TOKEN = "changeme"
