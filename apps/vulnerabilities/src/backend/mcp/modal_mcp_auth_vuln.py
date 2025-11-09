@@ -1,5 +1,7 @@
 import os
 import contextlib
+import secrets
+import json
 import modal
 from modal import Image, App, asgi_app
 from fastapi import FastAPI, Request, status
@@ -9,7 +11,6 @@ import requests
 import time
 import io
 import zipfile
-import json
 from fastapi.responses import StreamingResponse
 import asyncio
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -369,8 +370,9 @@ def prioritize_vulnerabilities(cves: list[str] = None) -> dict:
 @asgi_app(label="mcp-vuln-auth", custom_domains=["vulnmcp.transilienceapi.com"])
 def vulnmcp_transilienceapi_com() -> FastAPI:
     """Entrypoint for Modal to serve the FastAPI + MCP ASGI app."""
-    # Get expected token from environment
-    EXPECTED_TOKEN = "changeme"
+    # Load valid API keys from environment
+    VALID_KEYS = json.loads(os.environ.get("MCP_VALID_KEYS", '["changeme"]'))
+
     # Create MCP app first
     mcp_app = vuln_mcp.http_app(
         path="/mcp",
@@ -401,7 +403,8 @@ def vulnmcp_transilienceapi_com() -> FastAPI:
             scheme, token = auth_header.split()
             if scheme.lower() != "bearer":
                 raise ValueError("Invalid authentication scheme")
-            if token != EXPECTED_TOKEN:
+            # Use timing-attack resistant comparison
+            if not any(secrets.compare_digest(token, valid_key) for valid_key in VALID_KEYS):
                 raise ValueError("Invalid token")
         except (ValueError, AttributeError):
             return JSONResponse(
